@@ -7,7 +7,11 @@
   overflow: hidden;
   border: 10px solid white;
   border-radius: 10px;
-  -webkit-backface-visibility: hidden; /* Safari */
+
+  -webkit-perspective: 0;
+  -webkit-backface-visibility: hidden !important;
+  -webkit-transform: translate3d(0, 0, 0);
+  visibility: visible;
   backface-visibility: hidden;
 }
 
