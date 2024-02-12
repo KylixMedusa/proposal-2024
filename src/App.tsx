@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
 
-function App() {
+import React, { useEffect, useState } from "react";
+
+import Envelope from "./components/Envelope/Envelope";
+
+const App: React.FC = () => {
+  const [loaderClass, setLoaderClass] = useState("loader__container");
+
+  const appHeight = () => {
+    const doc = document.documentElement;
+    doc.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", appHeight);
+    appHeight();
+    return () => window.removeEventListener("resize", appHeight);
+  }, []);
+
+  const onLoad = () => {
+    setTimeout(() => {
+      setLoaderClass("loader__container loader__container--hide");
+    }, 1500);
+    setTimeout(() => {
+      setLoaderClass(
+        "loader__container loader__container--hide loader__container--hidden"
+      );
+    }, 2000);
+  };
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className={loaderClass}>
+        <div className="heart__envelope"></div>
+      </div>
+      <div className="body__wrapper">
+        <Envelope />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
